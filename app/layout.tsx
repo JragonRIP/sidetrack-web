@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { RailTicker } from "@/components/RailTicker";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
 
@@ -125,6 +126,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <ScrollToTop />
         <RailTicker />
         <SiteNav />
         <main className="relative z-[2] flex flex-1 flex-col">{children}</main>

@@ -262,13 +262,14 @@ export function HomePageContent() {
           <h2 className="font-display mx-auto mt-3 max-w-xl text-center text-[1.65rem] font-semibold leading-tight tracking-tight text-[var(--color-white)] sm:mt-4 sm:text-3xl md:text-[2.15rem]">
             Word travels on US-2
           </h2>
-          <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [-webkit-overflow-scrolling:touch] sm:gap-5 md:mt-12 md:grid md:snap-none md:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0 lg:gap-8">
+          {/* Mobile: full-width cards, copy stacks vertically; swipe horizontally between reviews. md+: 3-column grid (unchanged). */}
+          <div className="mt-10 flex w-full snap-x snap-mandatory gap-0 overflow-x-auto pb-4 [-webkit-overflow-scrolling:touch] md:mt-12 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0 md:snap-none lg:gap-8">
             {featuredReviews.map((r) => (
               <article
                 key={r.author}
-                className="min-w-[min(88vw,22rem)] shrink-0 snap-center rounded-md border border-[color-mix(in_srgb,var(--color-border)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-card)_96%,black)] px-6 py-7 sm:min-w-[min(85vw,24rem)] sm:px-7 sm:py-8 md:min-w-0"
+                className="box-border min-w-full shrink-0 snap-center rounded-md border border-[color-mix(in_srgb,var(--color-border)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-card)_96%,black)] px-6 py-7 md:min-w-0 md:px-7 md:py-8"
               >
-                <p className="font-body text-[0.9rem] leading-relaxed text-[color-mix(in_srgb,var(--color-muted)_99%,transparent)] sm:text-[0.95rem]">
+                <p className="font-body max-w-none text-[0.95rem] leading-relaxed text-[color-mix(in_srgb,var(--color-muted)_99%,transparent)] break-words">
                   {r.quote}
                 </p>
                 <p className="font-label mt-6 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-[color-mix(in_srgb,var(--color-tan)_85%,transparent)] sm:mt-8 sm:text-[0.62rem]">
