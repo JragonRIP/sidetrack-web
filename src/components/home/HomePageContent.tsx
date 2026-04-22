@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useCallback, useRef, useState } from "react";
 import { TrainDivider } from "@/components/TrainDivider";
-import { reviews } from "@/data/reviews";
+import { reviews, type Review } from "@/data/reviews";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -17,6 +18,84 @@ const fadeUp = {
 
 const ORDER_PHONE_TEL = "tel:+19064975521";
 const ORDER_PHONE_DISPLAY = "(906) 497-5521";
+
+/** One review per screen on small phones: vertical copy, swipe sideways for next. */
+function GuestNotesMobileCarousel({ items }: { items: Review[] }) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  const syncActive = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const page = el.clientWidth;
+    if (page <= 0) return;
+    const idx = Math.round(el.scrollLeft / page);
+    setActive(Math.min(Math.max(0, idx), items.length - 1));
+  }, [items.length]);
+
+  const goTo = (i: number) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+  };
+
+  return (
+    <div className="w-full">
+      <div
+        ref={scrollerRef}
+        onScroll={syncActive}
+        className="flex touch-pan-x snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Guest reviews"
+      >
+        {items.map((r) => (
+          <article
+            key={r.author}
+            className="flex min-h-[min(56svh,400px)] w-full min-w-full shrink-0 snap-center snap-always flex-col justify-center rounded-md border border-[color-mix(in_srgb,var(--color-border)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-card)_96%,black)] px-5 py-7"
+          >
+            <p className="font-body max-w-none text-[clamp(0.88rem,3.4vw,1rem)] leading-snug text-[color-mix(in_srgb,var(--color-muted)_99%,transparent)] break-words">
+              {r.quote}
+            </p>
+            <p className="font-label mt-5 text-[0.58rem] font-semibold uppercase tracking-[0.2em] text-[color-mix(in_srgb,var(--color-tan)_85%,transparent)] sm:text-[0.6rem]">
+              {r.author}
+              {r.location ? (
+                <span className="font-body font-normal normal-case tracking-normal text-[color-mix(in_srgb,var(--color-muted)_95%,transparent)]">
+                  , {r.location}
+                </span>
+              ) : null}
+            </p>
+          </article>
+        ))}
+      </div>
+      <div className="mt-6 flex justify-center gap-1 sm:gap-2" role="tablist" aria-label="Select review">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            role="tab"
+            aria-selected={active === i}
+            aria-label={`Review ${i + 1} of ${items.length}`}
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border-0 bg-transparent p-0"
+            onClick={() => goTo(i)}
+          >
+            <span
+              className={`block h-2.5 w-2.5 rounded-full transition-colors ${
+                active === i
+                  ? "bg-[var(--color-amber)]"
+                  : "bg-[color-mix(in_srgb,var(--color-muted)_42%,transparent)]"
+              }`}
+              aria-hidden
+            />
+          </button>
+        ))}
+      </div>
+      <p className="font-label mt-4 text-center text-[0.58rem] uppercase tracking-[0.14em] text-[color-mix(in_srgb,var(--color-muted)_75%,transparent)]">
+        Swipe for more
+      </p>
+    </div>
+  );
+}
 
 const featured = [
   {
@@ -262,26 +341,30 @@ export function HomePageContent() {
           <h2 className="font-display mx-auto mt-3 max-w-xl text-center text-[1.65rem] font-semibold leading-tight tracking-tight text-[var(--color-white)] sm:mt-4 sm:text-3xl md:text-[2.15rem]">
             Word travels on US-2
           </h2>
-          {/* Mobile: stacked full-width cards, no horizontal scroll. md+: 3-column grid. */}
-          <div className="mt-10 flex w-full flex-col gap-5 md:mt-12 md:grid md:grid-cols-3 md:gap-6 lg:gap-8">
-            {featuredReviews.map((r) => (
-              <article
-                key={r.author}
-                className="box-border w-full rounded-md border border-[color-mix(in_srgb,var(--color-border)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-card)_96%,black)] px-6 py-7 md:px-7 md:py-8"
-              >
-                <p className="font-body max-w-none text-[0.95rem] leading-relaxed text-[color-mix(in_srgb,var(--color-muted)_99%,transparent)] break-words">
-                  {r.quote}
-                </p>
-                <p className="font-label mt-6 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-[color-mix(in_srgb,var(--color-tan)_85%,transparent)] sm:mt-8 sm:text-[0.62rem]">
-                  {r.author}
-                  {r.location ? (
-                    <span className="font-body font-normal normal-case tracking-normal text-[color-mix(in_srgb,var(--color-muted)_95%,transparent)]">
-                      , {r.location}
-                    </span>
-                  ) : null}
-                </p>
-              </article>
-            ))}
+          <div className="mt-10 md:mt-12">
+            <div className="md:hidden">
+              <GuestNotesMobileCarousel items={featuredReviews} />
+            </div>
+            <div className="hidden gap-6 md:grid md:grid-cols-3 lg:gap-8">
+              {featuredReviews.map((r) => (
+                <article
+                  key={r.author}
+                  className="box-border w-full rounded-md border border-[color-mix(in_srgb,var(--color-border)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-card)_96%,black)] px-6 py-7 md:px-7 md:py-8"
+                >
+                  <p className="font-body max-w-none text-[0.95rem] leading-relaxed text-[color-mix(in_srgb,var(--color-muted)_99%,transparent)] break-words">
+                    {r.quote}
+                  </p>
+                  <p className="font-label mt-6 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-[color-mix(in_srgb,var(--color-tan)_85%,transparent)] sm:mt-8 sm:text-[0.62rem]">
+                    {r.author}
+                    {r.location ? (
+                      <span className="font-body font-normal normal-case tracking-normal text-[color-mix(in_srgb,var(--color-muted)_95%,transparent)]">
+                        , {r.location}
+                      </span>
+                    ) : null}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
         <TrainDivider />
