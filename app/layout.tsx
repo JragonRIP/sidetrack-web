@@ -119,7 +119,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${oswald.variable} ${lora.variable} ${courier.variable} h-full scroll-smooth antialiased`}
+      className={`${playfair.variable} ${oswald.variable} ${lora.variable} ${courier.variable} h-full scroll-auto antialiased`}
     >
       <body className="body-grain relative isolate flex min-h-full flex-col bg-[var(--color-bg-deep)] font-body text-[var(--color-text)]">
         <script

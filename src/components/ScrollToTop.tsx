@@ -3,13 +3,19 @@
 import { useEffect, useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
 
+/**
+ * Must use behavior "auto" so CSS `scroll-smooth` on :root cannot slow or block reaching y=0.
+ * Mobile Safari sometimes applies scroll restoration after paint; we repeat a few times.
+ */
 function scrollTopHard() {
-  window.scrollTo(0, 0);
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
+  const y = 0;
+  window.scrollTo({ top: y, left: 0, behavior: "auto" });
+  document.documentElement.scrollTop = y;
+  document.documentElement.scrollTo({ top: y, left: 0, behavior: "auto" });
+  document.body.scrollTop = y;
+  document.body.scrollTo({ top: y, left: 0, behavior: "auto" });
 }
 
-/** Scrolls to top on client navigations. useLayoutEffect runs before paint so we beat scroll restoration. */
 export function ScrollToTop() {
   const pathname = usePathname();
 
@@ -24,8 +30,16 @@ export function ScrollToTop() {
   }, [pathname]);
 
   useEffect(() => {
-    const t = setTimeout(scrollTopHard, 0);
-    return () => clearTimeout(t);
+    scrollTopHard();
+    const raf1 = requestAnimationFrame(() => {
+      scrollTopHard();
+      requestAnimationFrame(scrollTopHard);
+    });
+    const timeouts = [0, 50, 120, 280, 450].map((ms) => setTimeout(scrollTopHard, ms));
+    return () => {
+      cancelAnimationFrame(raf1);
+      timeouts.forEach(clearTimeout);
+    };
   }, [pathname]);
 
   return null;

@@ -106,6 +106,7 @@ export default function AboutPage() {
         <div className="border-t border-[color-mix(in_srgb,var(--color-border)_55%,transparent)] pt-10 text-center sm:pt-12">
           <Link
             href="/menu"
+            scroll
             className="font-label inline-flex min-h-[48px] min-w-[44px] items-center justify-center bg-[var(--color-amber)] px-8 py-3.5 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-bg-deep)] transition-colors hover:bg-[var(--color-amber-hover)] sm:px-10"
           >
             View menu

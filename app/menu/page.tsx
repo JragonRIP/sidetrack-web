@@ -239,6 +239,7 @@ export default function MenuPage() {
             </p>
             <Link
               href="/contact"
+              scroll
               className="font-label mt-8 inline-flex min-h-[48px] items-center justify-center text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-amber)] transition-colors hover:text-[var(--color-amber-hover)]"
             >
               Contact the restaurant

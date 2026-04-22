@@ -168,12 +168,14 @@ export function HomePageContent() {
             >
               <Link
                 href="/menu"
+                scroll
                 className="font-label inline-flex min-h-[48px] min-w-[44px] flex-1 items-center justify-center bg-[var(--color-amber)] px-8 py-3.5 text-center text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-bg-deep)] transition-colors hover:bg-[var(--color-amber-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-amber)] sm:flex-none sm:px-9"
               >
                 View menu
               </Link>
               <Link
                 href="/contact"
+                scroll
                 className="font-label inline-flex min-h-[48px] min-w-[44px] flex-1 items-center justify-center border border-[color-mix(in_srgb,var(--color-amber)_65%,transparent)] px-8 py-3.5 text-center text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[color-mix(in_srgb,var(--color-tan)_96%,transparent)] transition-colors hover:border-[var(--color-amber)] hover:text-[var(--color-amber)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-amber)] sm:flex-none sm:px-9"
               >
                 Hours &amp; location
@@ -301,6 +303,7 @@ export function HomePageContent() {
           </div>
           <Link
             href="/specials"
+            scroll
             className="font-label inline-flex min-h-[48px] w-full shrink-0 items-center justify-center border border-[color-mix(in_srgb,var(--color-amber)_55%,transparent)] px-8 py-3.5 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-amber)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-amber)_10%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-amber)] md:w-auto"
           >
             Weekly lineup
@@ -324,6 +327,7 @@ export function HomePageContent() {
             </p>
             <Link
               href="/about"
+              scroll
               className="font-label mt-8 inline-flex min-h-[48px] items-center text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-amber)] transition-colors hover:text-[var(--color-amber-hover)] sm:mt-10"
             >
               Our story

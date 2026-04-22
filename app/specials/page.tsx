@@ -85,6 +85,7 @@ export default function SpecialsPage() {
       <div className="mx-auto mt-12 max-w-2xl px-1 text-center">
         <Link
           href="/menu"
+          scroll
           className="font-label inline-flex min-h-[48px] w-full items-center justify-center rounded-md border border-[color-mix(in_srgb,var(--color-amber)_45%,transparent)] px-6 py-3.5 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-amber)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-amber)_8%,transparent)] sm:w-auto"
         >
           Full menu
