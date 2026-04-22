@@ -33,6 +33,7 @@ export function SiteNav() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 md:px-6 md:py-4">
         <Link
           href="/"
+          scroll
           className="group flex min-h-[44px] min-w-[44px] items-center gap-3 md:gap-3.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-amber)]"
           aria-label="Sidetrack Restaurant & Bar home"
         >
@@ -64,6 +65,7 @@ export function SiteNav() {
               <Link
                 key={href}
                 href={href}
+                scroll
                 className={`font-label min-h-[44px] min-w-[44px] px-3.5 py-3 text-[0.72rem] font-medium uppercase tracking-[0.18em] transition-colors ${
                   active
                     ? "text-[var(--color-amber)]"
@@ -105,6 +107,7 @@ export function SiteNav() {
                   <Link
                     key={href}
                     href={href}
+                    scroll
                     onClick={() => setOpen(false)}
                     className={`font-label min-h-[48px] rounded-sm px-4 py-3.5 text-[0.8rem] font-medium uppercase tracking-[0.16em] ${
                       active

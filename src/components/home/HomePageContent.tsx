@@ -262,12 +262,12 @@ export function HomePageContent() {
           <h2 className="font-display mx-auto mt-3 max-w-xl text-center text-[1.65rem] font-semibold leading-tight tracking-tight text-[var(--color-white)] sm:mt-4 sm:text-3xl md:text-[2.15rem]">
             Word travels on US-2
           </h2>
-          {/* Mobile: full-width cards, copy stacks vertically; swipe horizontally between reviews. md+: 3-column grid (unchanged). */}
-          <div className="mt-10 flex w-full snap-x snap-mandatory gap-0 overflow-x-auto pb-4 [-webkit-overflow-scrolling:touch] md:mt-12 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0 md:snap-none lg:gap-8">
+          {/* Mobile: stacked full-width cards, no horizontal scroll. md+: 3-column grid. */}
+          <div className="mt-10 flex w-full flex-col gap-5 md:mt-12 md:grid md:grid-cols-3 md:gap-6 lg:gap-8">
             {featuredReviews.map((r) => (
               <article
                 key={r.author}
-                className="box-border min-w-full shrink-0 snap-center rounded-md border border-[color-mix(in_srgb,var(--color-border)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-card)_96%,black)] px-6 py-7 md:min-w-0 md:px-7 md:py-8"
+                className="box-border w-full rounded-md border border-[color-mix(in_srgb,var(--color-border)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-card)_96%,black)] px-6 py-7 md:px-7 md:py-8"
               >
                 <p className="font-body max-w-none text-[0.95rem] leading-relaxed text-[color-mix(in_srgb,var(--color-muted)_99%,transparent)] break-words">
                   {r.quote}
