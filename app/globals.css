@@ -1,26 +1,126 @@
 @import "tailwindcss";
 
+/* All hex colors live here — use var(--token) in components via Tailwind arbitrary values */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #1a1d21;
+  --color-bg-deep: #121518;
+  --color-bg-elevated: #23282d;
+  --color-bg-card: #1e2328;
+  --color-amber: #d4a43a;
+  --color-amber-hover: #e4b84a;
+  --color-amber-dark: #8a6a1e;
+  --color-green: #2f4a3c;
+  --color-green-deep: #1e2f28;
+  --color-green-glow: #3d6b52;
+  --color-rust: #8b4513;
+  --color-rust-muted: #6b3a15;
+  --color-tan: #c9b896;
+  --color-text: #f5f2eb;
+  --color-muted: #9a9388;
+  --color-border: #3a3530;
+  --color-white: #faf8f4;
+  --color-black: #0a0b0c;
+  --track-dash: #4a5248;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--color-bg);
+  --color-bg-deep: var(--color-bg-deep);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-bg-card: var(--color-bg-card);
+  --color-amber: var(--color-amber);
+  --color-amber-hover: var(--color-amber-hover);
+  --color-green: var(--color-green);
+  --color-green-deep: var(--color-green-deep);
+  --color-rust: var(--color-rust);
+  --color-tan: var(--color-tan);
+  --color-text: var(--color-text);
+  --color-muted: var(--color-muted);
+  --font-display: var(--font-display);
+  --font-label: var(--font-label);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility font-display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+}
+
+@utility font-label {
+  font-family: var(--font-label), ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility font-body {
+  font-family: var(--font-body), ui-serif, Georgia, serif;
+}
+
+@utility font-mono-detail {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker-scroll 62s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker {
+    animation: none;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-deep);
+  color: var(--color-text);
+}
+
+/* Grain overlay */
+.body-grain::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  /* Below page content — high z-index here can blank the viewport in some browsers */
+  z-index: 1;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* Repeating railroad track pattern (hero) */
+.bg-rail-pattern {
+  background-image: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 14px,
+      color-mix(in srgb, var(--track-dash) 55%, transparent) 14px,
+      color-mix(in srgb, var(--track-dash) 55%, transparent) 16px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 48px,
+      color-mix(in srgb, var(--track-dash) 35%, transparent) 48px,
+      color-mix(in srgb, var(--track-dash) 35%, transparent) 50px
+    );
+  background-size: 100% 3px, 100% 14px;
+  background-position: center 42%, center 58%;
+  background-repeat: repeat-x;
+  opacity: 0.22;
+}
+
+/* Smooth scrolling for in-page anchors */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
