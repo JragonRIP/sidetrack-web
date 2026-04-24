@@ -10,6 +10,7 @@ import { RailTicker } from "@/components/RailTicker";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
+import { UnofficialSiteDisclaimer } from "@/components/UnofficialSiteDisclaimer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -126,6 +127,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <UnofficialSiteDisclaimer />
         <ScrollToTop />
         <RailTicker />
         <SiteNav />
